@@ -39,6 +39,24 @@
   (:nicknames :tp)
   (:use :cl)
   (:export
+   #:*default-day*
+   #:*default-hour*
+   #:*default-language*
+   #:*default-minute*
+   #:*default-month*
+   #:*default-recognizers*
+   #:*default-second*
+   #:*default-year*
+   #:*default-zone*
+   #:*fmt-time-iso8601-long*
+   #:*format-time-date*
+   #:*format-time-full*
+   #:*format-time-iso8601-long*
+   #:*format-time-iso8601-short*
+   #:*format-time-rfc1123*
+   #:*format-time-time*
+   #:format-time
    #:parse-time
+   #:recognize-fmt
    ))
 

@@ -22,26 +22,6 @@
 ;;; USA
 
 (in-package :time-parser)
- 
-(export '*default-day*)
-(export '*default-hour*)
-(export '*default-language*)
-(export '*default-minute*)
-(export '*default-month*)
-(export '*default-recognizers*)
-(export '*default-second*)
-(export '*default-year*)
-(export '*default-zone*)
-(export '*fmt-time-iso8601-long*)
-(export '*format-time-date*)
-(export '*format-time-full*)
-(export '*format-time-iso8601-long*)
-(export '*format-time-iso8601-short*)
-(export '*format-time-rfc1123*)
-(export '*format-time-time*)
-(export 'format-time)
-(export 'parse-time)
-(export 'recognize-fmt)
 
 (defvar *debug* nil)
 
