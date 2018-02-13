@@ -15,6 +15,10 @@ and times in PDF info records.
 * It's much, much faster than it was before because it tries
 to eliminate redundant computation and cache recognizers.
 
+A version of this code appears in cl-stdutils, but that version
+does not include the improvements herein.
+
+
 EXAMPLES:
 
 (tp:parse-time "2018-02-13T10:16:28 -7") ; -->

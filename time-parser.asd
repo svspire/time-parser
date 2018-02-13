@@ -39,7 +39,6 @@ code by Gene Michael Stover."
   :version "0.1"
   :maintainer "Shannon Spires <ssos@bearlanding.com>"
   :licence "LGPL"
-  :depends-on (:stdutils)
   :serial t
   :components ((:file "package")
                (:file "time-parser")))        
