@@ -43,9 +43,9 @@ which is 12.")
           (ss mm hh dd) (decode-universal-time (get-universal-time))
         (declare (ignore ss mm hh))
         dd))
-  "Function which returns the day to assume when there is no day.  The
-default value of *DEFAULT-DAY* is a function which returns the current
-day.")
+  "Function which returns the day of month to assume when there is no
+day of month.  The default value of *DEFAULT-DAY* is a function which
+returns today's day of month.")
 (proclaim '(type function *default-day*))
 
 (defvar *default-month*
@@ -403,39 +403,6 @@ components must be present in the BROKEN time."
                            (if (broken-time-zone y)
                                (- (broken-time-zone y))
                              nil))))
-
-(defvar *default-day* #'(lambda ()
-                          (fourth
-                           (multiple-value-list
-                               (decode-universal-time
-                                (get-universal-time)))))
-  "Function which returns the day of month to assume when there is no
-day of month.  The default value of *DEFAULT-DAY* is a function which
-returns today's day of month.")
-
-(proclaim '(type function *default-day*))
-  
-(defvar *default-month* #'(lambda ()
-                            (fifth
-                             (multiple-value-list
-                                 (decode-universal-time
-                                  (get-universal-time)))))
-  "Function which returns the month to assume when there is no
-month.  The default value of *DEFAULT-MONTH* is a function which
-returns the current month.")
-
-(proclaim '(type function *default-month*))
-
-(defvar *default-year* #'(lambda ()
-                           (sixth
-                            (multiple-value-list
-                                (decode-universal-time
-                                 (get-universal-time)))))
-  "Function which returns the year to assume when there is no
-year.  The default value of *DEFAULT-YEAR* is a function which
-returns the current year.")
-
-(proclaim '(type function *default-year*))
   
 (defun next-fn (strm fn)
   "Consume & collect characters from STRM as long as they satisfy
