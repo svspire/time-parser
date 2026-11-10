@@ -384,8 +384,15 @@ time-zone; if it's missing, it won't be inserted."
    :yr (broken-time-yr x)
    :zone (broken-time-zone x)))
 
+(defun lossage-free-encode-universal-time (second minute hour date month year &optional time-zone)
+ "Compensate for brain-dead implementation of encode-universal-time in Lispworks which throws an error
+  if time-zone is both supplied and nil. This version is still compatible with everybody else."
+  (if time-zone
+      (encode-universal-time second minute hour date month year time-zone)
+      (encode-universal-time second minute hour date month year)))
+
 (defun broken-to-ut (x)
-  "Given a BROKEN time structure, conver them
+  "Given a BROKEN time structure, convert them
 to a universal time & return the universal time.  All of the date-&-time
 components must be present in the BROKEN time."
   ;; Notice how we handle the time zone.  First, it must already be a
@@ -394,7 +401,7 @@ components must be present in the BROKEN time."
   ;; BROKEN-TIME, while ENCODE-UNIVERSAL-TIME represents time zones in an
   ;; opposite way.  So we must negate the time zone.
   (let ((y (normalize-broken x)))
-    (encode-universal-time (broken-time-ss y)
+    (lossage-free-encode-universal-time (broken-time-ss y)
                            (broken-time-mm y)
                            (broken-time-hh y)
                            (broken-time-dd y)
@@ -844,7 +851,7 @@ zones will give you the same universal time."
       (setq ss 0
             mm 0
             hh (funcall *default-hour*))
-      (encode-universal-time ss mm hh dd mo yy 0))))
+      (lossage-free-encode-universal-time ss mm hh dd mo yy 0))))
 
 (defun recognize-yyyymmdd-nw (str tokens)
   "Recognize YYYY MM DD, with only whitespace separating the tokens.
@@ -1222,6 +1229,8 @@ string."
             (make-fmt-recognizer "%a%B%d%Y")   ; like above but without comma.
             (make-fmt-recognizer "%a,%B%d,%Y") ; Maximum commafication "Thursday, June 23, 2005"
             (make-fmt-recognizer "%d-%b-%Y")   ; like "20-Jan-2018"
+            (make-fmt-recognizer "%Y-%m-%d %H:%M:%S") ; "2020-04-17 10:41:18"
+            (make-fmt-recognizer "%Y-%m-%d %H:%M:%S %Z") ; "2020-04-17 10:41:18 +0200"
 
             ; For UUCP messages
 ;Tue, 21 Jul 2009 09:23:37 -0700 (PDT)
@@ -1233,8 +1242,10 @@ string."
             ; Others
             (make-fmt-recognizer "%a,%B%d%Y")  ; Last variant just for completeness.
             (make-fmt-recognizer "%m/%d/%Y")   ; stupid American date
+            (make-fmt-recognizer "%Y/%m/%d")   ; Year-first stupid American date.
             (make-fmt-recognizer "%d %m %Y") ; Like CIA world factbook indep_date
             (make-fmt-recognizer "%a %B %d %H:%M:%S %Y") ; like in a PDF info record
+            (make-fmt-recognizer "%m/%d/%Y %H:%M:%S %p") ; "03/02/2021 08:53:55 AM"
             ))
 
 ; Caches
