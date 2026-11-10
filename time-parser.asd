@@ -35,7 +35,7 @@
   :name "Time Parser"
   :description "Parses and formats times in a variety of formats. Original
 code by Gene Michael Stover."
-  :author "Shannon Spires <ssos@bearlanding.com>"
+  :author ("Gene Michael Stover" "Shannon Spires <ssos@bearlanding.com>")
   :version "0.1"
   :maintainer "Shannon Spires <ssos@bearlanding.com>"
   :licence "LGPL"
